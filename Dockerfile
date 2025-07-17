@@ -1,10 +1,10 @@
-# Use official PHP 8.1 base image with FPM
+# Use official PHP 8.1 image with FPM
 FROM php:8.1-fpm
 
 # Set working directory
 WORKDIR /var/www
 
-# Install system dependencies
+# Install system dependencies and PHP extensions
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -17,23 +17,23 @@ RUN apt-get update && apt-get install -y \
     npm \
     && docker-php-ext-install pdo_mysql mbstring zip exif pcntl
 
-# Install Composer
+# Install Composer globally
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy app source code
+# Copy application files
 COPY . .
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Set permissions
+# Set permissions for Laravel
 RUN chmod -R 775 storage bootstrap/cache
 
-# Generate optimized config cache (except APP_KEY which comes from env)
+# Clear and cache Laravel config and routes (env will be used at runtime)
 RUN php artisan config:clear && php artisan route:clear && php artisan view:clear
 
-# Expose port for Render
+# Expose the port Laravel will run on
 EXPOSE 8000
 
-# Start Laravel server
+# Start Laravel built-in server
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
