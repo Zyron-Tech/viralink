@@ -26,7 +26,17 @@ COPY . .
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
+# At the end of Dockerfile
+RUN composer install --no-dev --optimize-autoloader && \
+    php artisan config:clear && \
+    php artisan config:cache && \
+    php artisan route:cache && \
+    php artisan view:cache && \
+    php artisan storage:link && \
+    chown -R www-data:www-data /var/www/html && \
+    chmod -R 755 /var/www/html/storage && \
+    chmod -R 755 /var/www/html/bootstrap/cache
+
 
 # Laravel Permissions
 RUN chown -R www-data:www-data /var/www/html \

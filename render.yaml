@@ -9,7 +9,7 @@ services:
       php artisan route:cache
       php artisan view:cache
       php artisan storage:link
-    startCommand: apache2-foreground
+    startCommand: ""
     envVars:
       - key: APP_NAME
         value: ViraLink
