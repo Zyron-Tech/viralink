@@ -1,24 +1,25 @@
-# Stage 1: Build assets with Node
-FROM node:18 as node-builder
+# Stage 1: Build Vite assets with Node
+FROM node:18 AS node-builder
 
 WORKDIR /app
 
-# Copy package.json and lock file, install deps and build
+# Copy and install frontend dependencies
 COPY package*.json ./
 RUN npm install
 
-COPY resources ./resources
+# Copy frontend assets and build
+COPY resources/ ./resources/
 COPY vite.config.js ./
 RUN npm run build
 
 
-# Stage 2: Main PHP Application
+# Stage 2: PHP with Laravel
 FROM php:8.1-fpm
 
 # Set working directory
 WORKDIR /var/www
 
-# Install dependencies
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -33,23 +34,29 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy app source
+# Copy application source code
 COPY . .
 
-# Copy the built Vite assets from the Node builder
-COPY --from=node-builder /app/public/build public/build
+# Copy built Vite assets from Node stage
+COPY --from=node-builder /app/resources ./resources
+COPY --from=node-builder /app/public/build ./public/build
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Set correct permissions
+# Set proper permissions
 RUN chmod -R 775 storage bootstrap/cache
 
-# Clear and cache Laravel configs
-RUN php artisan config:clear && php artisan route:clear && php artisan view:clear
+# Clear Laravel cache files and regenerate config
+RUN php artisan config:clear \
+    && php artisan route:clear \
+    && php artisan view:clear \
+    && php artisan config:cache \
+    && php artisan route:cache \
+    && php artisan view:cache
 
-# Expose port
+# Expose port for Render
 EXPOSE 8000
 
-# Start Laravel development server
+# Start Laravel server
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
