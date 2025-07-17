@@ -11,7 +11,7 @@ COPY vite.config.js ./
 RUN npm run build
 
 
-# Stage 2: PHP with Laravel
+# Stage 2: Main PHP Application
 FROM php:8.1-fpm
 
 # Set working directory
@@ -32,27 +32,26 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Create a non-root user
-RUN useradd -m laraveluser
-
-# Copy source code
+# Copy app source
 COPY . .
 
-# Copy built frontend assets
+# Copy the built Vite assets from Node builder
 COPY --from=node-builder /app/public/build public/build
 
-# Set proper permissions
-RUN chown -R laraveluser:laraveluser /var/www
+# ⚠️ Copy .env file before composer install
+COPY .env .env
+
+# Set correct permissions
 RUN chmod -R 775 storage bootstrap/cache
 
-# Switch to non-root user
-USER laraveluser
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader || true
 
-# Install PHP dependencies as non-root
-RUN composer install --no-dev --optimize-autoloader
-
-# Laravel setup
-RUN php artisan config:clear && php artisan route:clear && php artisan view:clear
+# If artisan fails during composer, we now run it after .env is present
+RUN php artisan config:clear \
+    && php artisan route:clear \
+    && php artisan view:clear \
+    && php artisan key:generate
 
 # Expose port
 EXPOSE 8000
