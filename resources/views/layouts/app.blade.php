@@ -6,7 +6,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>{{ config('app.name', 'ViraLink') }}</title>
-  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+  <script src="https://cdn.tailwindcss.com"></script>
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-[#0f1117] text-white font-sans antialiased">
