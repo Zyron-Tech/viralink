@@ -88,6 +88,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::delete('/users/{id}', [AdminController::class, 'destroy'])->name('users.destroy');
 });
+Route::get('/health', function () {
+    return response('OK', 200);
+});
 
 
 
