@@ -38,20 +38,11 @@ COPY . .
 # Copy the built Vite assets from Node builder
 COPY --from=node-builder /app/public/build public/build
 
-# ⚠️ Copy .env file before composer install
-# COPY .env .env
-
 # Set correct permissions
 RUN chmod -R 775 storage bootstrap/cache
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader || true
-
-# If artisan fails during composer, we now run it after .env is present
-RUN php artisan config:clear \
-    && php artisan route:clear \
-    && php artisan view:clear \
-    && php artisan key:generate
 
 # Expose port
 EXPOSE 8000
