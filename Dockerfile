@@ -39,7 +39,7 @@ COPY . .
 COPY --from=node-builder /app/public/build public/build
 
 # ⚠️ Copy .env file before composer install
-COPY .env .env
+# COPY .env .env
 
 # Set correct permissions
 RUN chmod -R 775 storage bootstrap/cache
