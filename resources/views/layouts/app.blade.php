@@ -133,7 +133,7 @@
     <br>
     <form method="POST" action="{{ route('logout') }}">
     @csrf
-    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition duration-300 ease-in-out">
+    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition duration-300 ease-in-out">
     Logout
 </button>
 
@@ -222,7 +222,7 @@
         <br>
         <form method="POST" action="{{ route('logout') }}">
     @csrf
-    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition duration-300 ease-in-out">
+    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition duration-300 ease-in-out">
     Logout
 </button>
 
