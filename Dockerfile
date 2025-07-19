@@ -1,17 +1,31 @@
-# Stage 1: Build assets with Node
+# ===============================
+# Stage 1: Node - Build frontend
+# ===============================
 FROM node:18 as node-builder
 
 WORKDIR /app
 
+# Copy package manager files
 COPY package*.json ./
+
+# Install Node dependencies
 RUN npm install
 
-COPY resources ./resources
+# Copy everything needed to build assets
 COPY vite.config.js ./
+COPY tailwind.config.js ./
+COPY postcss.config.js ./
+COPY .env .env
+COPY resources ./resources
+COPY public ./public
+
+# Build frontend assets with Vite
 RUN npm run build
 
 
-# Stage 2: Main PHP Application
+# ===============================
+# Stage 2: PHP - Main Laravel App
+# ===============================
 FROM php:8.1-fpm
 
 # Set working directory
@@ -32,20 +46,24 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy app source
+# Copy application source code
 COPY . .
 
-# Copy the built Vite assets from Node builder
+# Copy built assets from Node build stage
 COPY --from=node-builder /app/public/build public/build
+COPY --from=node-builder /app/public/manifest.json public/manifest.json
 
 # Set correct permissions
 RUN chmod -R 775 storage bootstrap/cache
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader || true
+RUN composer install --no-dev --optimize-autoloader
 
-# Expose port
+# Cache Laravel config and routes
+RUN php artisan config:cache && php artisan route:cache && php artisan view:cache
+
+# Expose Laravel dev server port
 EXPOSE 8000
 
-# Start Laravel server
+# Start Laravel dev server
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
