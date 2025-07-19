@@ -1,69 +1,62 @@
-# ===============================
-# Stage 1: Node - Build frontend
-# ===============================
+# Stage 1: Build frontend assets with Node
 FROM node:18 as node-builder
 
 WORKDIR /app
 
-# Install Node dependencies
+# Install dependencies
 COPY package*.json ./
+RUN npm install
+
+# Copy source files for Vite build
+COPY resources ./resources
 COPY vite.config.js ./
 COPY tailwind.config.js ./
 COPY postcss.config.js ./
 
-RUN npm install
-
-# Copy app resources
-COPY resources ./resources
-COPY public ./public
-
-# Build frontend assets (with manifest)
+# Build assets
 RUN npm run build
 
-
-# ===============================
-# Stage 2: PHP - Laravel App
-# ===============================
+# Stage 2: Set up Laravel with PHP
 FROM php:8.1-fpm
 
 # Set working directory
 WORKDIR /var/www
 
-# Install system dependencies
+# Install PHP dependencies
 RUN apt-get update && apt-get install -y \
     git \
     curl \
     zip \
     unzip \
-    libpng-dev \
+    libzip-dev \
     libonig-dev \
     libxml2-dev \
-    libzip-dev \
-    && docker-php-ext-install pdo_mysql mbstring zip exif pcntl
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    && docker-php-ext-install pdo pdo_mysql zip
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy application source code
+# Copy Laravel source code
 COPY . .
 
-# Copy built assets from Node stage
-COPY --from=node-builder /app/public/build public/build
+# Copy Vite build output from previous stage
+COPY --from=node-builder /app/public/build ./public/build
 
-# ✅ Fix for Vite 5 manifest location
-COPY --from=node-builder /app/public/build/.vite/manifest.json public/manifest.json
+# Optionally, if Laravel Mix or Vite expects manifest.json
+COPY --from=node-builder /app/public/build/.vite/manifest.json ./public/build/manifest.json
 
-# Set correct permissions
-RUN chmod -R 775 storage bootstrap/cache
-
-# Install PHP dependencies
+# Install Laravel PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Cache Laravel config and routes
+# Set file permissions
+RUN chown -R www-data:www-data /var/www \
+    && chmod -R 755 /var/www/storage
+
+# Laravel specific: cache configs/routes/views
 RUN php artisan config:cache && php artisan route:cache && php artisan view:cache
 
-# Expose Laravel server port
-EXPOSE 8000
-
-# Start Laravel server
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+EXPOSE 9000
+CMD ["php-fpm"]
