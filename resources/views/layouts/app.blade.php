@@ -7,6 +7,7 @@
 
   <title>{{ config('app.name', 'ViraLink') }}</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-[#0f1117] text-white font-sans antialiased">
