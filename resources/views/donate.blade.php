@@ -68,7 +68,7 @@
           </svg>
           USDT (TRC20)
         </h3>
-      <a href="https://wa.me/2349032043408" target="_blank">  <p class="text-gray-300 break-all">contact on WhatsApp</p>
+      <a href="https://wa.me/2349032043408" target="_blank">  <p class="text-gray-300 break-all">contact on WhatsApp for info.</p>
   </a></div>
 
       <!-- BTC -->
@@ -79,7 +79,7 @@
           </svg>
           Bitcoin (BTC)
         </h3>
-        <a href="https://wa.me/2349032043408" target="_blank"><p class="text-gray-300 break-all">contact on WhatsApp</p>
+        <a href="https://wa.me/2349032043408" target="_blank"><p class="text-gray-300 break-all">contact on WhatsApp for info.</p>
   </a></div>
 
       <!-- ETH -->
@@ -93,7 +93,7 @@
           </svg>
           Ethereum (ETH)
         </h3>
-        <a href="https://wa.me/2349032043408" target="_blank"><p class="text-gray-300 break-all">contact on WhatsApp</p>
+        <a href="https://wa.me/2349032043408" target="_blank"><p class="text-gray-300 break-all">contact on WhatsApp for info.</p>
   </a> </div>
     </div>
 
