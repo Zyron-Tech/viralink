@@ -107,6 +107,17 @@
         Contact Me on WhatsApp
       </a>
     </div>
+
+    <div class="text-center mt-10">
+  <a href="/" target="_blank"
+     class="inline-flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-full transition shadow-lg">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Go back to ViraLink
+  </a>
+</div>
+
   </div>
 </section>
 </body>
