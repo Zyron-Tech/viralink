@@ -112,7 +112,7 @@
     </span>
 
     <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight max-w-3xl">
-      Create Viral <span class="text-green-500">X Tweets</span> + Hashtags <br> in Minutes
+      Create Viral <span class="text-green-500">𝕏 Tweets & Threads</span> + Hashtags <br> in Minutes
     </h1>
     <p class="text-gray-400 text-lg max-w-xl mb-10">
       Generate authentic viral tweets and optimized hashtags with AI. Share engaging content faster and watch your X presence soar.
