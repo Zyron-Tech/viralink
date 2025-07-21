@@ -54,8 +54,8 @@
         Bank Transfer (NGN)
       </h3>
       <p class="text-gray-300">Account Name: <span class="text-white font-semibold">Peace Mathew</span></p>
-      <p class="text-gray-300">Bank Name: <span class="text-white font-semibold">Kuda Microfinance Bank</span></p>
-      <p class="text-gray-300">Account Number: <span class="text-white font-semibold">1234567890</span></p>
+      <p class="text-gray-300">Bank Name: <span class="text-white font-semibold">Moniepoint Microfinance Bank</span></p>
+      <p class="text-gray-300">Account Number: <span class="text-white font-semibold">9032043408</span></p>
     </div>
 
     <!-- Crypto Section -->
@@ -68,8 +68,8 @@
           </svg>
           USDT (TRC20)
         </h3>
-        <p class="text-gray-300 break-all">TXXXTrc20AddressSampleHereZZZZ</p>
-      </div>
+      <a href="https://wa.me/2349032043408" target="_blank">  <p class="text-gray-300 break-all">contact on WhatsApp</p>
+  </a></div>
 
       <!-- BTC -->
       <div class="bg-[#10141c] p-5 rounded-xl border border-gray-800">
@@ -79,8 +79,8 @@
           </svg>
           Bitcoin (BTC)
         </h3>
-        <p class="text-gray-300 break-all">1BitcoinAddressExampleHereABC123</p>
-      </div>
+        <a href="https://wa.me/2349032043408" target="_blank"><p class="text-gray-300 break-all">contact on WhatsApp</p>
+  </a></div>
 
       <!-- ETH -->
       <div class="bg-[#10141c] p-5 rounded-xl border border-gray-800">
@@ -93,8 +93,8 @@
           </svg>
           Ethereum (ETH)
         </h3>
-        <p class="text-gray-300 break-all">0xEthereumAddressExampleABCDEF1234</p>
-      </div>
+        <a href="https://wa.me/2349032043408" target="_blank"><p class="text-gray-300 break-all">contact on WhatsApp</p>
+  </a> </div>
     </div>
 
     <!-- Contact on WhatsApp -->
