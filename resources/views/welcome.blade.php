@@ -296,7 +296,7 @@
     <!-- Branding -->
     <div class="text-center md:text-left">
       <h4 class="text-xl font-bold text-white">Vira<span class="text-green-500">Link</span></h4>
-      <p class="text-sm mt-1">Built for creators. Powered by AI.</p>
+      <p class="text-sm mt-1">AI Credit: Tokari Core.</p>
     </div>
 
     <!-- Socials -->
