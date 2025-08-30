@@ -37,7 +37,7 @@ Virallink is a modern AI-powered web app designed to help creators, businesses, 
 ### Installation
 ```bash
 # Clone repository
-git clone https://github.com/your-username/virallink.git
+git clone https://github.com/Zyron-Tech/viralink.git
 cd virallink
 
 # Install dependencies
